@@ -17,11 +17,21 @@ namespace Biblioteka.Models
         public DbSet<Klient> Klient { get; set; }
         public DbSet<Ksiazka> NowaKsiazka { get; set; }
         public DbSet<Kategoria> Kategoria { get; set; }
+        public DbSet<KsiazkaPerKlient> KsiazkaPerKlient { get; set; }
+        public DbSet<Wypozyczenie> Wypozyczenia { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Wypozyczenie>().HasNoKey();
+
+            modelBuilder.Entity<KsiazkaPerKlient>(entity =>
+            {
+                entity.HasNoKey(); // Widok jest bezkluczowy
+                entity.ToView("KsiazkaPerKlient"); // Mapowanie do widoku
+            });
 
             // Mapowanie dla klasy NowaKsiazka
             modelBuilder.Entity<Ksiazka>().ToTable("ksiazka"); // Tabela używana do zapisu książek

@@ -126,5 +126,34 @@ namespace Biblioteka.Controllers
 
             return View(model); // Wyświetl formularz z błędami walidacji
         }
+
+        [HttpPost]
+        public IActionResult Zwroc(int id)
+        {
+            // Pobranie rekordu wypożyczenia na podstawie id_wypozyczenia
+            var wypozyczenie = _context.Wypozyczenia.FirstOrDefault(w => w.Id == id);
+
+            if (wypozyczenie == null)
+            {
+                TempData["Error"] = "Nie znaleziono wypożyczenia.";
+                return RedirectToAction("Index");
+            }
+
+            // Aktualizacja daty zwrotu
+            wypozyczenie.Data_Zwrotu = DateTime.Now;
+
+            // Zmiana statusu książki na 'dostępna'
+            var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == wypozyczenie.Id_Ksiazka);
+            if (ksiazka != null)
+            {
+                ksiazka.Dostepna = true;
+            }
+
+            // Zapis zmian w bazie danych
+            _context.SaveChanges();
+
+            TempData["Success"] = "Książka została zwrócona.";
+            return RedirectToAction("Index");
+        }
     }
 }
