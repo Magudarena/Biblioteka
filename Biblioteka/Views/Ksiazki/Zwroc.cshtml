@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Potwierdzenie zwrotu";
+}
+
+<h1>Potwierdzenie zwrotu</h1>
+<p>Czy na pewno chcesz zwrócić książkę: <strong>@ViewBag.tytul</strong>?</p>
+
+<form asp-action="ZwrocPotwierdzenie" method="post">
+    <input type="hidden" name="id_wypozyczenia" value="@ViewBag.id_wypozyczenia" />
+    <input type="hidden" name="id_klient" value="@ViewBag.id_klient" />
+    <button type="submit" class="btn btn-success">Potwierdź zwrot</button>
+    <a asp-action="KsiazkiKlienta" asp-controller="Klienci" asp-route-id="@ViewBag.id_klient" class="btn btn-secondary">Anuluj</a>
+</form>
