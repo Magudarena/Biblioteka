@@ -2,16 +2,14 @@
 
 namespace Biblioteka.Models
 {
-    public class Book
+    public class Ksiazka
     {
-        //numer biblioteczny
-        public int Id { get; set; }
 
         public int NumerBiblioteczny { get; set; }
 
         [Required(ErrorMessage = "Proszę podaj nazwę")]
         [MinLength(2, ErrorMessage = "Nazwa musi mieć co najmniej 2 znaki")]
-        public string Nazwa { get; set; }
+        public string Tytul { get; set; }
 
         [Required(ErrorMessage = "Proszę podaj autora")]
         [MinLength(2, ErrorMessage = "Autor musi mieć co najmniej 2 znaki")]

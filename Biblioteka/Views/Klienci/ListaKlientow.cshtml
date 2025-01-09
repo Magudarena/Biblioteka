@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Biblioteka.Models.Klient>
+
+<h1>Lista Klientów</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Telefon</th>
+            <th>Email</th>
+            <th>Wypożyczone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var klient in Model)
+        {
+            <tr>
+                <td>@klient.Imie</td>
+                <td>@klient.Nazwisko</td>
+                <td>@klient.Telefon</td>
+                <td>@klient.Email</td>
+                <td>@klient.Wypozyczone</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,15 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using Biblioteka.Models; // Dodaj przestrzeñ nazw dla kontekstu bazy danych
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Dodaj konfiguracjê kontekstu bazy danych
+builder.Services.AddDbContext<BibliotekaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotekaConnection")));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Obs³uga b³êdów i routingu
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

@@ -1,0 +1,33 @@
+﻿@*model Biblioteka.Models.Ksiazka
+
+@{
+    ViewData["Title"] = "Ksiazka";
+}
+
+@using (Html.BeginForm("Wynik", "Home", FormMethod.Post))
+{
+    <form asp-action="Ksiazka" method="post">
+
+        <div asp-validation-summary="All"></div>
+
+        <div>
+            <label asp-for="Tyul">Tytuł</label>
+            <input asp-for="Tyul" />
+            <span asp-validation-for="Tyul" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Autor">Autor książki</label>
+            <input asp-for="Autor" />
+            <span asp-validation-for="Autor" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Kategoria">Kategoria</label>
+            <input asp-for="Kategoria" />
+            <span asp-validation-for="Kategoria" class="text-danger"></span>
+        </div>
+
+        <button type="submit">Dodaj książkę</button>
+    </form>
+*@

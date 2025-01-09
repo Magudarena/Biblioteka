@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteka.Models
 {
-    public class Dane
+    public class Klient
     {
-        public int Id { get; set; }
 
         [Required(ErrorMessage = "Proszę podaj imię")]
         [MinLength(2, ErrorMessage = "Imię musi mieć co najmniej 2 znaki")]
@@ -20,6 +19,8 @@ namespace Biblioteka.Models
         public string Email { get; set; }
 
         [Phone(ErrorMessage = "Proszę podaj poprawny numer telefonu")]
-        public string NrTelefonu { get; set; }
+        public int Telefon { get; set; }
+
+        public int Wypozyczone { get; set; }
     }
 }

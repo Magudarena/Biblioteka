@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Biblioteka.Models.Ksiazka>
+
+<h1>Lista Książek</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nr Biblioteczny</th>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>ISBN</th>
+            <th>Kategoria</th>
+            <th>Wypożyczona</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ksiazka in Model)
+        {
+            <tr>
+                <td>@ksiazka.NumerBiblioteczny</td>
+                <td>@ksiazka.Tytul</td>
+                <td>@ksiazka.Autor</td>
+                <td>@ksiazka.ISBN</td>
+                <td>@ksiazka.Kategoria</td>
+                <td>@ksiazka.Wypozyczona</td>
+            </tr>
+        }
+    </tbody>
+</table>
