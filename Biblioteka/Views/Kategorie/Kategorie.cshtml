@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Biblioteka.Models.Kategoria>
+
+<h2>Lista kategorii</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kategoria in Model)
+        {
+            <tr>
+                <td>@kategoria.Nazwa</td>
+                <td>
+                    <a asp-action="Usun" asp-route-id="@kategoria.Id" class="btn btn-danger">
+                        Usuń
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Dodaj" class="btn btn-primary">Dodaj nową kategorię</a>

@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using Biblioteka.Models; // Dodaj przestrzeñ nazw dla kontekstu bazy danych
+using Biblioteka.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Dodaj konfiguracjê kontekstu bazy danych
 builder.Services.AddDbContext<BibliotekaContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BibliotekaConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("BibliotekaConnection"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure()));
+
 
 builder.Services.AddControllersWithViews();
 

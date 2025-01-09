@@ -1,0 +1,12 @@
+﻿@model Biblioteka.Models.Kategoria
+
+<h2>Dodaj nową kategorię</h2>
+
+<form asp-action="Dodaj" method="post">
+    <div class="form-group">
+        <label for="nazwa">Nazwa kategorii:</label>
+        <input type="text" id="nazwa" name="Nazwa" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>
