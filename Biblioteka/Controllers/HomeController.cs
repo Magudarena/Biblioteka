@@ -58,6 +58,31 @@ namespace Biblioteka.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult Zwracanie()
+        {
+            return View(new FormModel());
+        }
+
+        [HttpPost]
+        public IActionResult Zwracanie(FormModel dane)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "Książka zwrócona pomyślnie";
+                return View("Wynik", dane);
+            }
+            else return View(dane);
+        }
+
+
+
+
+
+
+
+
+
 
         [HttpPost]
         public IActionResult Wynik(FormModel model)

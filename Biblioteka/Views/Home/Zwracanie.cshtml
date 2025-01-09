@@ -1,0 +1,44 @@
+﻿@model Biblioteka.Models.FormModel
+
+@{
+    ViewData["Title"] = "Zwracanie";
+}
+@using (Html.BeginForm("Wynik", "Home", FormMethod.Post))
+{
+    <form asp-action="Zwracanie" method="post">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <style>
+            body, h1, h2, h3, h4, h5 {
+                font-family: "Raleway", sans-serif
+            }
+
+            .my-div {
+                margin-bottom: 10px;
+            }
+        </style>
+
+        <div asp-validation-summary="All"></div>
+
+        <h3>Oddawana książka</h3>
+        <div class="my-div">
+            <label asp-for="Ksiazka.Nr_biblioteczny">Numer biblioteczny książki</label>
+            <input asp-for="Ksiazka.Nr_biblioteczny" />
+            <span asp-validation-for="Ksiazka.Nr_biblioteczny" class="text-danger"></span>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Zwróć</button>
+            <button type="reset" class="btn btn-secondary">Wyczyść</button>
+        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
