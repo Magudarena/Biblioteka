@@ -1,8 +1,24 @@
 ﻿@model Biblioteka.Models.Ksiazka
 
-<h2>Usuń książkę</h2>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
+
+    .my-div {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<h3>Usuń książkę</h3>
 
 <p>Czy na pewno chcesz usunąć książkę <strong>@Model.Tytul</strong>?</p>
+
+<br />
 
 <form asp-action="UsunPotwierdzenie" asp-controller="Ksiazki" method="post">
     <input type="hidden" asp-for="Id" />

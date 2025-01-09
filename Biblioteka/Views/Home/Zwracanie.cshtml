@@ -6,6 +6,7 @@
 @using (Html.BeginForm("Wynik", "Home", FormMethod.Post))
 {
     <form asp-action="Zwracanie" method="post">
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -22,11 +23,15 @@
         <div asp-validation-summary="All"></div>
 
         <h3>Oddawana książka</h3>
-        <div class="my-div">
-            <label asp-for="Ksiazka.Nr_biblioteczny">Numer biblioteczny książki</label>
-            <input asp-for="Ksiazka.Nr_biblioteczny" />
+
+        <div class="form-group">
+            <label for="Ksiazka.Nr_biblioteczny">Numer biblioteczny książki </label>
+            <input asp-for="Ksiazka.Nr_biblioteczny" class="form-control" />
             <span asp-validation-for="Ksiazka.Nr_biblioteczny" class="text-danger"></span>
         </div>
+
+        <br />
+
 
         <div>
             <button type="submit" class="btn btn-primary">Zwróć</button>
@@ -34,9 +39,7 @@
         </div>
     </form>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+
 }
 
 @section Scripts {

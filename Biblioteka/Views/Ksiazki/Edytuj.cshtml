@@ -1,6 +1,22 @@
 ﻿@model Biblioteka.Models.Ksiazka
 
-<h2>Edytuj książkę</h2>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
+
+    .my-div {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+
+<h3>Edytuj książkę</h3>
 
 <form asp-action="Edytuj" method="post">
     <input type="hidden" asp-for="Id" />
@@ -40,6 +56,9 @@
         <input asp-for="Dostepna" type="checkbox" />
         <span asp-validation-for="Dostepna" class="text-danger"></span>
     </div>
+
+
+    <br />
 
     <button type="submit" class="btn btn-primary">Zapisz</button>
     <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
