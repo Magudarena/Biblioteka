@@ -1,6 +1,21 @@
 ﻿@model Biblioteka.Models.Klient
 
-<h1>Dodaj nowego klienta</h1>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
+
+    .my-div {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<h3>Dodaj nowego klienta</h3>
 
 <form asp-action="Dodaj" asp-controller="Klienci" method="post">
     <div class="form-group">
@@ -26,6 +41,10 @@
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+
+
+    <br />
+
 
     <button type="submit" class="btn btn-primary">Dodaj</button>
 </form>
