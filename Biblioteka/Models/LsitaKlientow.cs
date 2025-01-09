@@ -3,9 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteka.Models
 {
-    public class Klient
+    public class LsitaKlientow
     {
-        public int Id { get; set; } // Klucz główny
+        [Key]
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Proszę podaj imię")]
         [MinLength(2, ErrorMessage = "Imię musi mieć co najmniej 2 znaki")]
@@ -19,9 +20,9 @@ namespace Biblioteka.Models
         [EmailAddress(ErrorMessage = "Proszę podaj poprawny adres e-mail")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Proszę podaj numer telefonu")]
-        [RegularExpression(@"^\d{9}$", ErrorMessage = "Telefon musi zawierać dokładnie 9 cyfr.")]
+        [Phone(ErrorMessage = "Proszę podaj poprawny numer telefonu")]
         public int Telefon { get; set; }
 
+        public int Wypozyczone { get; set; }
     }
 }

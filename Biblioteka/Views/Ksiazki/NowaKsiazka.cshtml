@@ -1,33 +1,39 @@
-﻿@*model Biblioteka.Models.Ksiazka
+﻿@model Biblioteka.Models.Ksiazka
 
-@{
-    ViewData["Title"] = "Ksiazka";
-}
+<h1>Dodaj Książkę</h1>
 
-@using (Html.BeginForm("Wynik", "Home", FormMethod.Post))
-{
-    <form asp-action="Ksiazka" method="post">
+<form asp-action="Dodaj" asp-controller="Ksiazki" method="post">
 
-        <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label for="Nr_biblioteczny">Nr biblioteczny</label>
+        <input asp-for="Nr_biblioteczny" class="form-control" />
+        <span asp-validation-for="Nr_biblioteczny" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Tytul">Tytuł</label>
+        <input asp-for="Tytul" class="form-control" />
+        <span asp-validation-for="Tytul" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Tyul">Tytuł</label>
-            <input asp-for="Tyul" />
-            <span asp-validation-for="Tyul" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label for="Autor">Autor</label>
+        <input asp-for="Autor" class="form-control" />
+        <span asp-validation-for="Autor" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Autor">Autor książki</label>
-            <input asp-for="Autor" />
-            <span asp-validation-for="Autor" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label for="ISBN">ISBN</label>
+        <input asp-for="ISBN" class="form-control" />
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Kategoria">Kategoria</label>
-            <input asp-for="Kategoria" />
-            <span asp-validation-for="Kategoria" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label for="KategoriaId">Kategoria</label>
+        <select asp-for="Kategoria" class="form-control" asp-items="ViewBag.Kategorie">
+            <option value="">-- Wybierz kategorię --</option>
+        </select>
+        <span asp-validation-for="Kategoria" class="text-danger"></span>
+    </div>
 
-        <button type="submit">Dodaj książkę</button>
-    </form>
-*@
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>

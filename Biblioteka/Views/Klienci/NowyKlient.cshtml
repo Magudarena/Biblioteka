@@ -1,38 +1,33 @@
 ﻿@model Biblioteka.Models.Klient
 
-@{
-    ViewData["Title"] = "Form";
-}
+<h1>Dodaj nowego klienta</h1>
 
-@using (Html.BeginForm("Wynik", "Home", FormMethod.Post))
-{
-    <form asp-action="Klient" method="post">
-        <div asp-validation-summary="All"></div>
+<form asp-action="Dodaj" asp-controller="Klienci" method="post">
+    <div class="form-group">
+        <label for="Imie">Imię</label>
+        <input asp-for="Imie" class="form-control" />
+        <span asp-validation-for="Imie" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Imie">Imię</label>
-            <input asp-for="Imie" />
-            <span asp-validation-for="Imie" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label for="Nazwisko">Nazwisko</label>
+        <input asp-for="Nazwisko" class="form-control" />
+        <span asp-validation-for="Nazwisko" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Nazwisko">Nazwisko</label>
-            <input asp-for="Nazwisko" />
-            <span asp-validation-for="Nazwisko" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label for="Telefon">Telefon</label>
+        <input asp-for="Telefon" class="form-control" />
+        <span asp-validation-for="Telefon" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Telefon">Telefon</label>
-            <input asp-for="Telefon" />
-            <span asp-validation-for="Telefon" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
 
-        <div>
-            <label asp-for="Email">Email</label>
-            <input asp-for="Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
 
-        <button type="submit">Wyślij</button>
-    </form>
-}
+<partial name="_ValidationScriptsPartial" />

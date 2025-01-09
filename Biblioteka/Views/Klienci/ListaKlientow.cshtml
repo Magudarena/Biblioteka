@@ -1,6 +1,8 @@
-﻿@model IEnumerable<Biblioteka.Models.Klient>
+﻿@model IEnumerable<Biblioteka.Models.LsitaKlientow>
 
 <h1>Lista Klientów</h1>
+
+<a asp-controller="Klienci" asp-action="Dodaj" class="btn btn-primary">Dodaj</a> <!-- Przycisk "Dodaj" -->
 
 <table class="table">
     <thead>
@@ -10,6 +12,7 @@
             <th>Telefon</th>
             <th>Email</th>
             <th>Wypożyczone</th>
+            <th>Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +24,9 @@
                 <td>@klient.Telefon</td>
                 <td>@klient.Email</td>
                 <td>@klient.Wypozyczone</td>
+                <td>
+                    <a asp-action="Usun" asp-route-id="@klient.Id" class="btn btn-danger">Usuń</a>
+                </td>
             </tr>
         }
     </tbody>

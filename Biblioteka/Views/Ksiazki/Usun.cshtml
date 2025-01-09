@@ -1,0 +1,11 @@
+﻿@model Biblioteka.Models.Ksiazka
+
+<h2>Usuń książkę</h2>
+
+<p>Czy na pewno chcesz usunąć książkę <strong>@Model.Tytul</strong>?</p>
+
+<form asp-action="UsunPotwierdzenie" asp-controller="Ksiazki" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Usuń</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>

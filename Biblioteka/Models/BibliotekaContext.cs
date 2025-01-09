@@ -10,17 +10,30 @@ namespace Biblioteka.Models
         {
         }
 
+
         // Zdefiniuj DbSet dla każdej tabeli w bazie danych
-        public DbSet<Klient> Klient { get; set; }
-        public DbSet<Ksiazka> Ksiazka { get; set; }
+        public DbSet<LsitaKlientow> ListaKlientow { get; set; }
+        public DbSet<ListaKsiazek> Ksiazka { get; set; }
+        public DbSet<Klient> NowyKlient { get; set; }
+        public DbSet<Ksiazka> NowaKsiazka { get; set; }
+        public DbSet<Kategoria> Kategoria { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        { 
-            // Wymuszenie nazwy tabeli "klient" dla klasy Klient
-            modelBuilder.Entity<Klient>().HasNoKey().ToTable("ListaKlientow");
+        {
+            base.OnModelCreating(modelBuilder);
 
-            // Wymuszenie nazwy tabeli "ksiazka" dla klasy Ksiazka
-            modelBuilder.Entity<Ksiazka>().HasNoKey().ToTable("ksiazka");
+            // Mapowanie dla klasy NowaKsiazka
+            modelBuilder.Entity<Ksiazka>().ToTable("ksiazka"); // Tabela używana do zapisu książek
+
+            // Wymuszenie nazwy tabeli "ListaKlientow" dla klasy Klient
+            modelBuilder.Entity<LsitaKlientow>().HasNoKey().ToTable("ListaKlientow");
+
+            // Wymuszenie nazwy tabeli "ListaKsiazek" dla klasy Ksiazka
+            modelBuilder.Entity<ListaKsiazek>().HasNoKey().ToTable("ListaKsiazek");
+
+            // Tabela używana do zapisu klientów
+            modelBuilder.Entity<Klient>().ToTable("klient").HasKey(k => k.Id);
         }
     }
 }

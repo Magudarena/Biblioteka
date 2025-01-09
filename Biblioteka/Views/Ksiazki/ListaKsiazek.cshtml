@@ -1,6 +1,8 @@
-﻿@model IEnumerable<Biblioteka.Models.Ksiazka>
+﻿@model IEnumerable<Biblioteka.Models.ListaKsiazek>
 
 <h1>Lista Książek</h1>
+
+<a asp-action="Dodaj" asp-controller="Ksiazki" class="btn btn-primary">Dodaj Książkę</a>
 
 <table class="table">
     <thead>
@@ -10,19 +12,23 @@
             <th>Autor</th>
             <th>ISBN</th>
             <th>Kategoria</th>
-            <th>Wypożyczona</th>
+            <th>Dostępna</th>
+            <th>Akcje</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var ksiazka in Model)
         {
             <tr>
-                <td>@ksiazka.NumerBiblioteczny</td>
+                <td>@ksiazka.nr_biblioteczny</td>
                 <td>@ksiazka.Tytul</td>
                 <td>@ksiazka.Autor</td>
                 <td>@ksiazka.ISBN</td>
                 <td>@ksiazka.Kategoria</td>
-                <td>@ksiazka.Wypozyczona</td>
+                <td>@(ksiazka.Dostepna ? "TAK" : "NIE")</td>
+                <td>
+                    <a asp-action="Usun" asp-route-id="@ksiazka.Id" class="btn btn-danger">Usuń</a>
+                </td>
             </tr>
         }
     </tbody>
