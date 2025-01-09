@@ -70,5 +70,44 @@ namespace Biblioteka.Controllers
 
             return RedirectToAction("Index"); // Przekierowanie na listę książek
         }
+
+
+        [HttpGet]
+        public IActionResult Edytuj(int id)
+        {
+            // Pobranie klienta z bazy danych
+            var klient = _context.NowyKlient.FirstOrDefault(k => k.Id == id);
+            if (klient == null)
+            {
+                return NotFound(); // Jeśli klient nie istnieje
+            }
+
+            return View(klient); // Przekazanie klienta do widoku
+        }
+
+        [HttpPost]
+        public IActionResult Edytuj(Klient model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Pobierz klienta z bazy danych
+                var klient = _context.NowyKlient.FirstOrDefault(k => k.Id == model.Id);
+                if (klient == null)
+                {
+                    return NotFound();
+                }
+
+                // Aktualizacja danych klienta
+                klient.Imie = model.Imie;
+                klient.Nazwisko = model.Nazwisko;
+                klient.Telefon = model.Telefon;
+                klient.Email = model.Email;
+
+                _context.SaveChanges(); // Zapisz zmiany w bazie danych
+                return RedirectToAction("Index"); // Przekierowanie na listę klientów
+            }
+
+            return View(model); // Jeśli model jest nieprawidłowy, wyświetl formularz z błędami
+        }
     }
 }

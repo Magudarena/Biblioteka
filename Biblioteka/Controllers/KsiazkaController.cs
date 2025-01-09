@@ -75,5 +75,56 @@ namespace Biblioteka.Controllers
 
             return RedirectToAction("Index"); // Przekierowanie na listę książek
         }
+
+
+        [HttpGet]
+        public IActionResult Edytuj(int id)
+        {
+            // Pobierz książkę z bazy danych
+            var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == id);
+            if (ksiazka == null)
+            {
+                return NotFound();
+            }
+
+            // Pobierz listę kategorii z bazy danych
+            var kategorie = _context.Kategoria.Select(k => new SelectListItem
+            {
+                Value = k.Id.ToString(),
+                Text = k.Nazwa
+            }).ToList();
+
+            // Przekaż listę kategorii do widoku
+            ViewBag.Kategorie = kategorie;
+
+            return View(ksiazka); // Przekaż książkę do widoku
+        }
+
+        [HttpPost]
+        public IActionResult Edytuj(Ksiazka model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Pobierz książkę z bazy danych
+                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == model.Id);
+                if (ksiazka == null)
+                {
+                    return NotFound();
+                }
+
+                // Aktualizacja danych książki
+                ksiazka.Nr_biblioteczny = model.Nr_biblioteczny;
+                ksiazka.Tytul = model.Tytul;
+                ksiazka.Autor = model.Autor;
+                ksiazka.ISBN = model.ISBN;
+                ksiazka.Kategoria = model.Kategoria;
+                ksiazka.Dostepna = model.Dostepna;
+
+                _context.SaveChanges(); // Zapisz zmiany w bazie danych
+                return RedirectToAction("Index");
+            }
+
+            return View(model); // Wyświetl formularz z błędami walidacji
+        }
     }
 }
