@@ -1,0 +1,82 @@
+﻿@model Biblioteka.Models.FormModel
+
+@{
+    ViewData["Title"] = "Wypozyczanie";
+}
+@using (Html.BeginForm("Wynik", "Home", FormMethod.Post))
+{
+    <form asp-action="Wypozyczanie" method="post">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <style>
+            body, h1, h2, h3, h4, h5 {
+                font-family: "Raleway", sans-serif
+            }
+
+            .my-div {
+                margin-bottom: 10px;
+            }
+        </style>
+
+        <div asp-validation-summary="All"></div>
+
+        <h3>Wypożyczana książka</h3>
+        <div class="my-div">
+            <label asp-for="Ksiazka.Nr_biblioteczny">Numer biblioteczny książki</label>
+            <input asp-for="Ksiazka.Nr_biblioteczny" />
+            <span asp-validation-for="Ksiazka.Nr_biblioteczny" class="text-danger"></span>
+        </div>
+
+        <div class="my-div">
+            <label asp-for="Ksiazka.Tytul">Nazwa książki</label>
+            <input asp-for="Ksiazka.Tytul" />
+            <span asp-validation-for="Ksiazka.Tytul" class="text-danger"></span>
+        </div>
+
+        <div class="my-div">
+            <label asp-for="Ksiazka.Autor">Autor</label>
+            <input asp-for="Ksiazka.Autor" />
+            <span asp-validation-for="Ksiazka.Autor" class="text-danger"></span>
+        </div>
+
+        <div class="my-div">
+            <label asp-for="Ksiazka.ISBN">ISBN</label>
+            <input asp-for="Ksiazka.ISBN" />
+            <span asp-validation-for="Ksiazka.ISBN" class="text-danger"></span>
+        </div>
+
+
+        <h3>Osoba wypożyczająca</h3>
+        <div class="my-div">
+            <label asp-for="Klient.Imie">Imię</label>
+            <input asp-for="Klient.Imie" />
+            <span asp-validation-for="Klient.Imie" class="text-danger"></span>
+        </div>
+
+        <div class="my-div">
+            <label asp-for="Klient.Nazwisko">Nazwisko</label>
+            <input asp-for="Klient.Nazwisko" />
+            <span asp-validation-for="Klient.Nazwisko" class="text-danger"></span>
+        </div>
+
+        <div class="my-div">
+            <label asp-for="Klient.Email">Email</label>
+            <input asp-for="Klient.Email" />
+            <span asp-validation-for="Klient.Email" class="text-danger"></span>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Wypożycz</button>
+            <button type="reset" class="btn btn-secondary">Wyczyść</button>
+        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
