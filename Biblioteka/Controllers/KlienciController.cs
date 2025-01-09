@@ -32,7 +32,7 @@ namespace Biblioteka.Controllers
             if (ModelState.IsValid)
             {
                 // Zapisz nowego klienta w tabeli klient
-                _context.NowyKlient.Add(model);
+                _context.Klient.Add(model);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -44,31 +44,29 @@ namespace Biblioteka.Controllers
         [HttpGet]
         public IActionResult Usun(int id)
         {
-            // Pobierz książkę z tabeli NowaKsiazka
-            var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == id);
-            if (ksiazka == null)
+            var klient = _context.Klient.FirstOrDefault(k => k.Id == id);
+            if (klient == null)
             {
                 return NotFound();
             }
 
-            return View(ksiazka); // Przekazanie obiektu NowaKsiazka do widoku
+            return View(klient); // Przekazanie obiektu NowyKlient do widoku
         }
 
         // POST: Usunięcie klienta
         [HttpPost]
         public IActionResult UsunPotwierdzenie(int id)
         {
-            // Pobierz książkę z tabeli NowaKsiazka
-            var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == id);
-            if (ksiazka == null)
+            var klient = _context.Klient.FirstOrDefault(k => k.Id == id);
+            if (klient == null)
             {
                 return NotFound();
             }
 
-            _context.NowaKsiazka.Remove(ksiazka); // Usuń książkę z tabeli
+            _context.Klient.Remove(klient); // Usuń klienta z tabeli
             _context.SaveChanges(); // Zapisz zmiany w bazie danych
 
-            return RedirectToAction("Index"); // Przekierowanie na listę książek
+            return RedirectToAction("Index"); // Przekierowanie na listę klientów
         }
 
 
@@ -76,7 +74,7 @@ namespace Biblioteka.Controllers
         public IActionResult Edytuj(int id)
         {
             // Pobranie klienta z bazy danych
-            var klient = _context.NowyKlient.FirstOrDefault(k => k.Id == id);
+            var klient = _context.Klient.FirstOrDefault(k => k.Id == id);
             if (klient == null)
             {
                 return NotFound(); // Jeśli klient nie istnieje
@@ -91,7 +89,7 @@ namespace Biblioteka.Controllers
             if (ModelState.IsValid)
             {
                 // Pobierz klienta z bazy danych
-                var klient = _context.NowyKlient.FirstOrDefault(k => k.Id == model.Id);
+                var klient = _context.Klient.FirstOrDefault(k => k.Id == model.Id);
                 if (klient == null)
                 {
                     return NotFound();

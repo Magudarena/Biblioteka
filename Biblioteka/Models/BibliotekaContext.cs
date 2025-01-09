@@ -14,7 +14,7 @@ namespace Biblioteka.Models
         // Zdefiniuj DbSet dla każdej tabeli w bazie danych
         public DbSet<LsitaKlientow> ListaKlientow { get; set; }
         public DbSet<ListaKsiazek> Ksiazka { get; set; }
-        public DbSet<Klient> NowyKlient { get; set; }
+        public DbSet<Klient> Klient { get; set; }
         public DbSet<Ksiazka> NowaKsiazka { get; set; }
         public DbSet<Kategoria> Kategoria { get; set; }
 
@@ -34,6 +34,8 @@ namespace Biblioteka.Models
 
             // Tabela używana do zapisu klientów
             modelBuilder.Entity<Klient>().ToTable("klient").HasKey(k => k.Id);
+
+            modelBuilder.Entity<Kategoria>().ToTable("kategoria");
         }
     }
 }
