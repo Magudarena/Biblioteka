@@ -2,7 +2,32 @@
     ViewData["Title"] = "Wypożyczenia";
 }
 
-<h2>Wypożycz książkę</h2>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
+
+    .my-div {
+        margin-bottom: 00px;
+    }
+
+    form {
+        margin-top: 00px;
+        padding 0;
+    }
+
+
+</style>
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+
+
+<h3>Wypożycz książkę</h3>
 
 <form asp-action="SzukajKsiazke" method="post">
     <label for="NrBiblioteczny">Nr Biblioteczny:</label>
