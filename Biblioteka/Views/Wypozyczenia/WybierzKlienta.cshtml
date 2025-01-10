@@ -1,0 +1,40 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Wybierz klienta</h2>
+
+@if (!Model.Any())
+{
+    <p>Nie znaleziono klientów.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Akcja</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var klient in Model)
+            {
+                <tr>
+                    <td>@klient.Imie</td>
+                    <td>@klient.Nazwisko</td>
+                    <td>@klient.Email</td>
+                    <td>@klient.Telefon</td>
+                    <td>
+                        <form asp-action="Wypozycz" method="post">
+                            <input type="hidden" name="KsiazkaId" value="@ViewBag.KsiazkaId" />
+                            <input type="hidden" name="KlientId" value="@klient.Id" />
+                            <button type="submit" class="btn btn-success">Wypożycz</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

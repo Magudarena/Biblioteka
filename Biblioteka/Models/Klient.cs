@@ -21,7 +21,7 @@ namespace Biblioteka.Models
 
         [Required(ErrorMessage = "Proszę podaj numer telefonu")]
         [RegularExpression(@"^\d{9}$", ErrorMessage = "Telefon musi zawierać dokładnie 9 cyfr.")]
-        public int Telefon { get; set; }
+        public string Telefon { get; set; }
 
     }
 }

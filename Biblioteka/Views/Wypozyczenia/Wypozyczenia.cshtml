@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Wypożyczenia";
+}
+
+<h2>Wypożycz książkę</h2>
+
+<form asp-action="SzukajKsiazke" method="post">
+    <label for="NrBiblioteczny">Nr Biblioteczny:</label>
+    <input type="text" id="NrBiblioteczny" name="NrBiblioteczny" class="form-control" />
+    <button type="submit" class="btn btn-primary mt-2">Szukaj</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}

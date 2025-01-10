@@ -21,7 +21,7 @@ namespace Biblioteka.Models
         public string Email { get; set; }
 
         [Phone(ErrorMessage = "Proszę podaj poprawny numer telefonu")]
-        public int Telefon { get; set; }
+        public string Telefon { get; set; }
 
         public int Wypozyczone { get; set; }
     }

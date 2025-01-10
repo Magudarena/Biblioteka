@@ -1,0 +1,17 @@
+﻿@model Biblioteka.Models.Ksiazka
+
+<h2>Podsumowanie książki</h2>
+<p>Nr Biblioteczny: @Model.Nr_biblioteczny</p>
+<p>Tytuł: @Model.Tytul</p>
+<p>Autor: @Model.Autor</p>
+<p>ISBN: @Model.ISBN</p>
+<p>Dostępność: @Model.Dostepna ? "Dostępna" : "Niedostępna"</p>
+
+<form asp-action="SzukajKlienta" method="post">
+    <input type="hidden" name="KsiazkaId" value="@Model.Id" />
+
+    <label for="Telefon">Telefon:</label>
+    <input type="text" id="Telefon" name="Telefon" class="form-control" />
+
+    <button type="submit" class="btn btn-primary mt-2">Szukaj klienta</button>
+</form>
