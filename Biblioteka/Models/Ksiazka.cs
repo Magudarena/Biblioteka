@@ -4,11 +4,10 @@ namespace Biblioteka.Models
 {
     public class Ksiazka
     {
-        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Proszę podać nr biblioteczny")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "nr biblioteczny musi mieć dokładnie 10 cyfr")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Nr biblioteczny musi mieć dokładnie 10 cyfr")]
         public string Nr_biblioteczny { get; set; }
 
         [Required(ErrorMessage = "Proszę podać tytuł książki")]
@@ -21,7 +20,6 @@ namespace Biblioteka.Models
         [RegularExpression(@"^\d{13}$", ErrorMessage = "ISBN musi mieć dokładnie 13 cyfr")]
         public string ISBN { get; set; }
 
-        // Domyślna wartość ustawiona na true
         public bool Dostepna { get; set; } = true;
 
         [Required(ErrorMessage = "Proszę wybrać kategorię")]

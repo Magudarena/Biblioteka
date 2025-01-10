@@ -1,11 +1,16 @@
 ﻿@model IEnumerable<Biblioteka.Models.KsiazkaPerKlient>
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <style>
     body, h1, h2, h3, h4, h5 {
-        font-family: "Raleway", sans-serif
+        font-family: "Raleway", sans-serif;
     }
 
     .my-div {
@@ -13,10 +18,13 @@
     }
 </style>
 
-
+<h2>Lista książek klienta</h2>
 <table class="table">
     <thead>
         <tr>
+            <th>Id wypożyczenia</th>
+            <th>Id klienta</th>
+            <th>Id książki</th>
             <th>Nr Biblioteczny</th>
             <th>Tytuł</th>
             <th>Autor</th>
@@ -27,31 +35,38 @@
         </tr>
     </thead>
     <tbody>
-        @if (TempData["Message"] != null)
+        @if (!Model.Any())
         {
-            <div class="alert alert-success">
-                @TempData["Message"]
-            </div>
-        }
-        @foreach (var ksiazka in Model)
-        {
-            <tr style="@(ksiazka.Data_Zwrotu != null ? "background-color: #d4edda;" : "")">
-                <td>@ksiazka.Nr_Biblioteczny</td>
-                <td>@ksiazka.Tytul</td>
-                <td>@ksiazka.Autor</td>
-                <td>@ksiazka.ISBN</td>
-                <td>@ksiazka.Data_Wypozyczenia?.ToString("yyyy-MM-dd")</td>
-                <td>@ksiazka.Data_Zwrotu?.ToString("yyyy-MM-dd")</td>
-                <td>
-                    @if (ksiazka.Data_Zwrotu == null)
-                    {
-
-                        <form method="post" action="@Url.Action("Zwroc", "Ksiazki", new { id = ksiazka.Id_Wypozyczenia })">
-                            <button type="submit" class="btn btn-warning">Zwróć</button>
-                        </form>
-                    }
-                </td>
+            <tr>
+                <td colspan="10" class="text-center">Brak danych do wyświetlenia.</td>
             </tr>
+        }
+        else
+        {
+            @foreach (var ksiazka in Model)
+            {
+                <tr>
+                    <td>@ksiazka.Id_Wypozyczenia</td>
+                    <td>@ksiazka.Id_Klient</td>
+                    <td>@ksiazka.Id_Ksiazka</td>
+                    <td>@ksiazka.Nr_Biblioteczny</td>
+                    <td>@ksiazka.Tytul</td>
+                    <td>@ksiazka.Autor</td>
+                    <td>@ksiazka.ISBN</td>
+                    <td>@ksiazka.Data_Wypozyczenia?.ToString("yyyy-MM-dd")</td>
+                    <td>@ksiazka.Data_Zwrotu?.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        @if (ksiazka.Data_Zwrotu == null)
+                        {
+                            <a href="/Ksiazki/Zwroc/@ksiazka.Id_Wypozyczenia" class="btn btn-warning">Zwróć</a>
+                        }
+                        else
+                        {
+                            <span class="text-success">Zwrócona</span>
+                        }
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

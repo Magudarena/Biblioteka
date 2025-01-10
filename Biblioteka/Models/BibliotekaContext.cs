@@ -25,7 +25,11 @@ namespace Biblioteka.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Wypozyczenie>().HasNoKey();
+            modelBuilder.Entity<Wypozyczenie>(entity =>
+            {
+                entity.ToTable("wypozyczenia"); // Nazwa tabeli w bazie danych
+                entity.HasKey(w => w.Id); // Definicja klucza głównego
+            });
 
             modelBuilder.Entity<KsiazkaPerKlient>(entity =>
             {
