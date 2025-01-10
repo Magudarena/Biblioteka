@@ -11,7 +11,6 @@ namespace Biblioteka.Models
         }
 
 
-        // Zdefiniuj DbSet dla każdej tabeli w bazie danych
         public DbSet<LsitaKlientow> ListaKlientow { get; set; }
         public DbSet<ListaKsiazek> Ksiazka { get; set; }
         public DbSet<Klient> Klient { get; set; }

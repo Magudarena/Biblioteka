@@ -79,6 +79,52 @@ namespace Biblioteka.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult Logowanie()
+        {
+            return View(new Uzytkownicy());
+        }
+
+
+        [HttpPost]
+        public IActionResult Logowanie(Uzytkownicy dane)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "Zalogowano pomyślnie";
+                return View(dane);
+            }
+            else return View(dane);
+        }
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult Rejestracja()
+        {
+            return View(new Uzytkownicy());
+        }
+
+
+        [HttpPost]
+        public IActionResult Rejestracja(Uzytkownicy dane)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "Zalogowano pomyślnie";
+                return View(dane);
+            }
+            else return View(dane);
+        }
+
+
+
+
 
 
 
@@ -103,6 +149,14 @@ namespace Biblioteka.Controllers
 
             return View(model);
         }
+
+
+
+
+
+
+
+
 
 
 
