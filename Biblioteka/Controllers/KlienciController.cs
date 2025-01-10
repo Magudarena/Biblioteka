@@ -143,6 +143,16 @@ namespace Biblioteka.Controllers
                     })
                     .ToList();
 
+                var klient = _context.Klient.FirstOrDefault(k => k.Id == id);
+                if (klient != null)
+                {
+                    ViewBag.KlientImieNazwisko = $"{klient.Imie} {klient.Nazwisko}";
+                }
+                else
+                {
+                    ViewBag.KlientImieNazwisko = "Nieznany klient";
+                }
+
                 return View(ksiazki);
             }
             catch (Exception)
