@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Biblioteka.Models;
+using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Controllers
 {
@@ -13,72 +15,100 @@ namespace Biblioteka.Controllers
             _context = context;
         }
 
-        // Wyświetlanie formularza do wyszukiwania książki
+        // Wyświetla widok formularza wyszukiwania książki
         public IActionResult Index()
         {
             return View("Wypozyczenia");
         }
 
-        // Wyszukiwanie książki po nr bibliotecznym
+        // Wyszukuje książkę po numerze bibliotecznym
         [HttpPost]
         public IActionResult SzukajKsiazke(string nrBiblioteczny)
         {
+            // Wyszukiwanie książki na podstawie numeru bibliotecznego i dostępności
             var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Nr_biblioteczny == nrBiblioteczny && k.Dostepna);
+
+            // Obsługa przypadku, gdy książka nie została znaleziona
             if (ksiazka == null)
             {
                 ViewBag.Message = "Książka niedostępna lub nie istnieje.";
                 return View("Wypozyczenia");
             }
+
+            // Przekazanie znalezionej książki do widoku PodsumowanieKsiazki
             return View("PodsumowanieKsiazki", ksiazka);
         }
 
         [HttpPost]
-        public IActionResult SzukajKlienta(string telefon)
+        public IActionResult SzukajKlienta(string telefon, int ksiazkaId)
         {
-
-            // Sprawdzenie, czy pole telefon nie jest puste
             if (string.IsNullOrWhiteSpace(telefon))
             {
                 ViewBag.Message = "Podaj numer telefonu.";
-                return View("PodsumowanieKsiazki");
+
+                // Pobieramy wcześniej wyszukaną książkę, aby ponownie ją przekazać do widoku
+                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == ksiazkaId);
+                return View("PodsumowanieKsiazki", ksiazka);
             }
 
-            // Wyszukiwanie klientów po telefonie
+            // Wyszukiwanie klienta w bazie danych
             var klient = _context.Klient.FirstOrDefault(k => k.Telefon == telefon);
 
-            // Sprawdzamy, czy klient został znaleziony
             if (klient == null)
             {
+                // Obsługa przypadku, gdy klient nie został znaleziony
                 ViewBag.Message = "Nie znaleziono klienta o tym numerze telefonu.";
-                return View("PodsumowanieKsiazki");
+
+                // Pobieramy wcześniej wyszukaną książkę, aby ponownie ją przekazać do widoku
+                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == ksiazkaId);
+                return View("PodsumowanieKsiazki", ksiazka);
             }
 
-            // Przekazanie wyniku do widoku
-            return View("WybierzKlienta", klient);
+            // Przekazanie klienta do kolejnego widoku (jeśli znaleziony)
+            return View("WybierzKlienta", new List<Klient> { klient });
         }
 
-
-
-
-
-        // Wypożyczenie książki
+        // Wypożycza książkę dla klienta
         [HttpPost]
-        public IActionResult Wypozycz(int ksiazkaId, int klientId)
+        public IActionResult Wypozycz(string nrBiblioteczny, int klientId)
         {
-            var wypozyczenie = new Wypozyczenie
+            using var transaction = _context.Database.BeginTransaction();
+            try
             {
-                Id_Ksiazka = ksiazkaId,
-                Id_Klient = klientId,
-                Data_Wypozyczenia = DateTime.Now
-            };
-            _context.Wypozyczenia.Add(wypozyczenie);
+                // Wyszukiwanie książki po numerze bibliotecznym
+                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Nr_biblioteczny == nrBiblioteczny && k.Dostepna);
 
-            var ksiazka = _context.NowaKsiazka.First(k => k.Id == ksiazkaId);
-            ksiazka.Dostepna = false;
+                if (ksiazka == null)
+                {
+                    ViewBag.Message = "Książka jest niedostępna.";
+                    return View("Wypozyczenia");
+                }
 
-            _context.SaveChanges();
+                // Aktualizacja dostępności książki
+                ksiazka.Dostepna = false;
+                _context.NowaKsiazka.Update(ksiazka);
 
-            return RedirectToAction("KsiazkiKlienta", "Klienci", new { id = klientId });
+                // Dodanie wpisu wypożyczenia do tabeli KsiazkaPerKlient
+                var wypozyczenie = new KsiazkaPerKlient
+                {
+                    Id_Ksiazka = ksiazka.Id, // Klucz główny to 'Id'
+                    Id_Klient = klientId,
+                    Data_Wypozyczenia = DateTime.Now
+                };
+                _context.KsiazkaPerKlient.Add(wypozyczenie);
+
+                // Zapisanie zmian i zatwierdzenie transakcji
+                _context.SaveChanges();
+                transaction.Commit();
+
+                return RedirectToAction("KsiazkiKlienta", "Klienci", new { id = klientId });
+            }
+            catch
+            {
+                transaction.Rollback();
+                ViewBag.Message = "Wystąpił błąd podczas wypożyczania książki.";
+                return View("Wypozyczenia");
+            }
         }
     }
 }

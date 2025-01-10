@@ -1,17 +1,30 @@
 ﻿@model Biblioteka.Models.Ksiazka
 
 <h2>Podsumowanie książki</h2>
-<p>Nr Biblioteczny: @Model.Nr_biblioteczny</p>
-<p>Tytuł: @Model.Tytul</p>
-<p>Autor: @Model.Autor</p>
-<p>ISBN: @Model.ISBN</p>
-<p>Dostępność: @Model.Dostepna ? "Dostępna" : "Niedostępna"</p>
+<p><strong>Nr Biblioteczny:</strong> @Model.Nr_biblioteczny</p>
+<p><strong>Tytuł:</strong> @Model.Tytul</p>
+<p><strong>Autor:</strong> @Model.Autor</p>
+<p><strong>ISBN:</strong> @Model.ISBN</p>
+<p><strong>Dostępność:</strong> @(Model.Dostepna ? "Dostępna" : "Niedostępna")</p>
 
+<!-- Formularz wyszukiwania klienta -->
+<h3>Wyszukaj klienta</h3>
 <form asp-action="SzukajKlienta" method="post">
+    <!-- Przechowywanie identyfikatora książki -->
     <input type="hidden" name="KsiazkaId" value="@Model.Id" />
 
-    <label for="Telefon">Telefon:</label>
-    <input type="text" id="Telefon" name="Telefon" class="form-control" />
+    <div class="form-group">
+        <label for="Telefon">Telefon:</label>
+        <input type="text" id="Telefon" name="Telefon" class="form-control" placeholder="Wprowadź numer telefonu" />
+    </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Szukaj klienta</button>
+    <button type="submit" class="btn btn-primary">Szukaj klienta</button>
 </form>
+
+<!-- Wyświetlanie komunikatu, jeśli istnieje -->
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger mt-3">
+        @ViewBag.Message
+    </div>
+}
