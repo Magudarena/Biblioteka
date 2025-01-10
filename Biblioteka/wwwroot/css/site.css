@@ -87,7 +87,7 @@ body, h1, h2, h3, h4, h5 {
 }
 
 body {
-    background-color: #f9fafb; /* t³o */
+    background-color: #dae0e344; /* t³o */
     color: #333;
     flex-direction: column;
     min-height: 100vh;
