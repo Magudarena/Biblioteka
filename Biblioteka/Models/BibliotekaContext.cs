@@ -11,7 +11,7 @@ namespace Biblioteka.Models
         }
 
 
-        public DbSet<LsitaKlientow> ListaKlientow { get; set; }
+        public DbSet<ListaKlientow> ListaKlientow { get; set; }
         public DbSet<ListaKsiazek> Ksiazka { get; set; }
         public DbSet<Klient> Klient { get; set; }
         public DbSet<Ksiazka> NowaKsiazka { get; set; }
@@ -56,7 +56,7 @@ namespace Biblioteka.Models
             modelBuilder.Entity<Ksiazka>().ToTable("ksiazka"); // Tabela używana do zapisu książek
 
             // Wymuszenie nazwy tabeli "ListaKlientow" dla klasy Klient
-            modelBuilder.Entity<LsitaKlientow>().HasNoKey().ToTable("ListaKlientow");
+            modelBuilder.Entity<ListaKlientow>().HasNoKey().ToTable("ListaKlientow");
 
             // Wymuszenie nazwy tabeli "ListaKsiazek" dla klasy Ksiazka
             modelBuilder.Entity<ListaKsiazek>().HasNoKey().ToTable("ListaKsiazek");

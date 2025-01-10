@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteka.Models
 {
-    public class LsitaKlientow
+    public class ListaKlientow
     {
         [Key]
         public int Id { get; set; }
