@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Biblioteka.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Controllers
 {
@@ -31,9 +32,23 @@ namespace Biblioteka.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Kategoria.Add(model); // Dodanie nowej kategorii do bazy danych
-                _context.SaveChanges(); // Zapisanie zmian w bazie danych
-                return RedirectToAction("Index"); // Powrót do listy kategorii
+                try
+                {
+                    _context.Kategoria.Add(model); // Dodanie nowej kategorii do bazy danych
+                    _context.SaveChanges(); // Zapisanie zmian w bazie danych
+                    return RedirectToAction("Index"); // Powrót do listy kategorii
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null && ex.InnerException.Message.Contains("UNIQUE KEY"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Wybrana kategoria już istnieje.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Wystąpił błąd podczas zapisywania zmian w bazie danych.");
+                    }
+                }
             }
 
             return View(model); // Jeśli model jest niepoprawny, ponownie wyświetl formularz z błędami walidacji

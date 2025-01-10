@@ -26,3 +26,13 @@
     <button type="submit" class="btn btn-primary">Zapisz</button>
     <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
 </form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}

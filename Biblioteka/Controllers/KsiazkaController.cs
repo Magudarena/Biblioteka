@@ -36,10 +36,23 @@ namespace Biblioteka.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.Dostepna = true; // Domyślnie ustaw dostępność na true
-                _context.NowaKsiazka.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    _context.NowaKsiazka.Add(model);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null && ex.InnerException.Message.Contains("UNIQUE KEY"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Numer biblioteczny został już zarezerwowany. Wybierz inny numer.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Wystąpił błąd podczas zapisywania zmian w bazie danych.");
+                    }
+                }
             }
 
             var kategorie = _context.Kategoria.ToList();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Biblioteka.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Controllers
 {
@@ -32,9 +33,23 @@ namespace Biblioteka.Controllers
             if (ModelState.IsValid)
             {
                 // Zapisz nowego klienta w tabeli klient
-                _context.Klient.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    _context.Klient.Add(model);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null && ex.InnerException.Message.Contains("UNIQUE KEY"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Podany klient już istnieje. Sprawdź dane klient w zakładce 'Klienci'.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Wystąpił błąd podczas zapisywania zmian w bazie danych.");
+                    }
+                }
             }
 
             return View("NowyKlient", model);
