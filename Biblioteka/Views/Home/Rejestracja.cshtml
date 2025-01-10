@@ -1,0 +1,106 @@
+﻿@model Biblioteka.Models.Uzytkownicy
+@{
+    ViewData["Title"] = "Rejestracja";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+
+
+
+                <h3>Stwórz nowe konto</h3>
+
+
+                <br />
+
+
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Imie" class="form-control" autocomplete="username" aria-required="true" placeholder="Imię" />
+                    <label asp-for="Imie">Imię</label>
+                    <span asp-validation-for="Imie" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Nazwisko" class="form-control" autocomplete="username" aria-required="true" placeholder="Nazwisko" />
+                    <label asp-for="Nazwisko">Nazwisko</label>
+                    <span asp-validation-for="Nazwisko" class="text-danger"></span>
+                </div>
+
+
+
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Haslo" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Hasło" />
+                    <label asp-for="Haslo" class="form-label">Hasło</label>
+                    <span asp-validation-for="Haslo" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Haslo" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Potwierdź hasło" />
+                    <label asp-for="Haslo" class="form-label">Potwierdź hasło</label>
+                    <span asp-validation-for="Haslo" class="text-danger"></span>
+                </div>
+                <div class="checkbox mb-3">
+                    <label asp-for="RememberMe" class="form-label">
+                        <input class="form-check-input" asp-for="RememberMe" />
+                        Zapamiętaj mnie
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Zaloguj</button>
+                </div>
+
+                <br />
+                <div>
+                    <p>
+                        <a >Nie pamiętasz hasła?</a>
+                    </p>
+                    <p>
+                        <a  >Zarejestruj się</a>
+                    </p>
+                    <p>
+                        <a >Wyślij ponownie mail weryfikacyjny</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Witaj w naszej bibliotece!</h3>
+            <hr />
+
+                    <div>
+                <p>
+
+                    Zapraszamy do korzystania z naszej nowoczesnej, elektronicznej biblioteki, która oferuje szeroki dostęp
+                    do materiałów i zasobów. 
+
+                    Aby w pełni skorzystać z oferty i mieć dostęp do całej bazy danych, wystarczy zarejestrować się w systemie. 
+                    Jako bibliotekarka masz teraz możliwość zarządzania tymi zasobami i wspierania użytkowników w odkrywaniu 
+                    nowych materiałów, co czyni Twoją rolę jeszcze bardziej kluczową. Zaloguj się i przekonaj się,
+                    jak łatwo można zarządzać biblioteką online!
+                        </p>
+                    </div>
+
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
+
