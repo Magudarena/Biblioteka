@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Biblioteka.Models.Uzytkownik>
-
 @{
     ViewData["Title"] = "Lista użytkowników";
+    var uprawnieniaSelectList = new SelectList(ViewBag.Uprawnienia, "Id", "Nazwa");
 }
 
 <h1>Lista użytkowników</h1>
@@ -14,6 +14,7 @@
             <th>Nazwisko</th>
             <th>Email</th>
             <th>Uprawnienia</th>
+            <th>Akcja</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +25,15 @@
                 <td>@uzytkownik.Imie</td>
                 <td>@uzytkownik.Nazwisko</td>
                 <td>@uzytkownik.Email</td>
-                <td>@uzytkownik.Uprawnienia?.Nazwa</td>
+                <td>
+                    <form method="post" asp-action="ZmienUprawnienia" asp-controller="Uzytkownicy">
+                        <input type="hidden" name="id" value="@uzytkownik.Id" />
+                        <select name="noweUprawnienia" class="form-select" asp-items="ViewBag.Uprawnienia">
+                            <option value="">Wybierz uprawnienie</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm mt-1">Zatwierdź</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
