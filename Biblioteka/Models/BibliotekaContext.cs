@@ -18,11 +18,27 @@ namespace Biblioteka.Models
         public DbSet<Kategoria> Kategoria { get; set; }
         public DbSet<KsiazkaPerKlient> KsiazkaPerKlient { get; set; }
         public DbSet<Wypozyczenie> Wypozyczenia { get; set; }
-
+        public DbSet<Uzytkownik> Uzytkownicy { get; set; }
+        public DbSet<Uprawnienia> Uprawnienia { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Uprawnienia>(entity =>
+            {
+                entity.ToTable("uprawnienia");
+                entity.HasKey(p => p.Id);
+            });
+
+            modelBuilder.Entity<Uzytkownik>(entity =>
+            {
+                entity.ToTable("uzytkownicy");
+                entity.HasKey(u => u.Id);
+                entity.HasOne(u => u.Uprawnienia)
+                      .WithMany(p => p.Uzytkownicy)
+                      .HasForeignKey(u => u.Id_Uprawnienia);
+            });
 
             modelBuilder.Entity<Wypozyczenie>(entity =>
             {

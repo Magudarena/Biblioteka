@@ -1,54 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteka.Models
 {
-
-
-    // Model dla tabeli uzytkownicy
-    public class Uzytkownik
+    public class RegisterViewModel
     {
-        public int Id { get; set; }
-
-        public string Email { get; set; }
-
-        public string Haslo { get; set; }
-
+        [Required(ErrorMessage = "Proszę podaj imię")]
         public string Imie { get; set; }
 
+        [Required(ErrorMessage = "Proszę podaj nazwisko")]
         public string Nazwisko { get; set; }
 
-        public int? IdUprawnienia { get; set; }
+        [Required(ErrorMessage = "Proszę podaj email")]
+        [EmailAddress(ErrorMessage = "Nieprawidłowy adres email")]
+        public string Email { get; set; }
 
+        [Required(ErrorMessage = "Proszę podaj hasło")]
+        [MinLength(6, ErrorMessage = "Hasło musi mieć co najmniej 6 znaków")]
+        public string Haslo { get; set; }
+
+        [Required(ErrorMessage = "Proszę potwierdź hasło")]
+        [Compare("Haslo", ErrorMessage = "Hasła nie są zgodne")]
+        public string ConfirmHaslo { get; set; }
     }
-
-
-
-    // Model dla tabeli uprawnienia
-    public class Uprawnienia
-    {
-        public int Id { get; set; }
-
-        public string Nazwa { get; set; }
-    }
-
-    // Model dla tabeli wypozyczenia
-
-}
-
-
-
-public class RegisterViewModel
-{
-    public string Username { get; set; }
-    public string FullName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string ConfirmPassword { get; set; }
-}
-
-public class LoginViewModel
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public bool RememberMe { get; set; }
 }

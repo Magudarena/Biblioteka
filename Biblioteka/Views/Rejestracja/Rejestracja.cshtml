@@ -1,4 +1,4 @@
-﻿@model Biblioteka.Models.Uzytkownicy
+﻿@model Biblioteka.Models.RegisterViewModel
 @{
     ViewData["Title"] = "Rejestracja";
 }
@@ -53,20 +53,14 @@
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Haslo" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Hasło" />
+                    <input asp-for="Haslo" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Hasło" />
                     <label asp-for="Haslo" class="form-label">Hasło</label>
                     <span asp-validation-for="Haslo" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Haslo" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Potwierdź hasło" />
-                    <label asp-for="Haslo" class="form-label">Potwierdź hasło</label>
-                    <span asp-validation-for="Haslo" class="text-danger"></span>
-                </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="RememberMe" />
-                        Zapamiętaj mnie
-                    </label>
+                    <input asp-for="ConfirmHaslo" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Potwierdź hasło" />
+                    <label asp-for="ConfirmHaslo" class="form-label">Potwierdź hasło</label>
+                    <span asp-validation-for="ConfirmHaslo" class="text-danger"></span>
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Zarejestruj</button>
