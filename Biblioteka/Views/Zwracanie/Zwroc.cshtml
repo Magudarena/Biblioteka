@@ -1,0 +1,19 @@
+﻿@{
+    var wypozyczenie = ViewBag.Wypozyczenie as Biblioteka.Models.Wypozyczenie;
+    var ksiazka = ViewBag.Ksiazka as Biblioteka.Models.Ksiazka;
+}
+
+<h2>Potwierdzenie zwrotu książki</h2>
+<p>Czy na pewno chcesz zwrócić książkę?</p>
+<ul>
+    <li><strong>Nr Biblioteczny:</strong> @ksiazka?.Nr_biblioteczny</li>
+    <li><strong>Tytuł:</strong> @ksiazka?.Tytul</li>
+    <li><strong>Autor:</strong> @ksiazka?.Autor</li>
+    <li><strong>Data Wypożyczenia:</strong> @wypozyczenie?.Data_Wypozyczenia?.ToString("yyyy-MM-dd")</li>
+</ul>
+
+<form method="post" action="/Ksiazki/ZwrocPotwierdzenie">
+    <input type="hidden" name="id_wypozyczenia" value="@wypozyczenie?.Id" />
+    <button type="submit" class="btn btn-success">Potwierdź zwrot</button>
+    <a href="/Klienci/KsiazkiKlienta/@wypozyczenie?.Id_Klient" class="btn btn-secondary">Anuluj</a>
+</form>
