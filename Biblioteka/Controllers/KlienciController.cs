@@ -112,11 +112,12 @@ namespace Biblioteka.Controllers
         {
             try
             {
-                // Pobranie książek przypisanych do klienta
                 var ksiazki = _context.KsiazkaPerKlient
                     .Where(k => k.Id_Klient == id)
-                    .Select(k => new Biblioteka.Models.KsiazkaPerKlient
+                    .Select(k => new KsiazkaPerKlient
                     {
+                        Id_Wypozyczenia = k.Id_Wypozyczenia,
+                        Id_Ksiazka = k.Id_Ksiazka,
                         Id_Klient = k.Id_Klient,
                         Nr_Biblioteczny = k.Nr_Biblioteczny,
                         Tytul = k.Tytul,
@@ -127,14 +128,12 @@ namespace Biblioteka.Controllers
                     })
                     .ToList();
 
-                // Przekazanie listy książek do widoku
                 return View(ksiazki);
             }
-            catch (System.Data.SqlTypes.SqlNullValueException)
+            catch (Exception)
             {
-                // Wyświetlenie komunikatu o braku książek
                 ViewBag.Message = "Brak książek przypisanych do tego klienta.";
-                return View(new List<Biblioteka.Models.KsiazkaPerKlient>());
+                return View(new List<KsiazkaPerKlient>());
             }
         }
 

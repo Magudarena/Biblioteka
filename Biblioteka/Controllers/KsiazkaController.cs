@@ -1,6 +1,7 @@
 ﻿using Biblioteka.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Biblioteka.Controllers
@@ -127,33 +128,63 @@ namespace Biblioteka.Controllers
             return View(model); // Wyświetl formularz z błędami walidacji
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Zwroc(int id)
         {
-            // Pobranie rekordu wypożyczenia na podstawie id_wypozyczenia
-            var wypozyczenie = _context.Wypozyczenia.FirstOrDefault(w => w.Id == id);
+            // Pobierz wypożyczenie
+            var wypozyczenie = _context.Wypozyczenia
+                .FirstOrDefault(w => w.Id == id && w.Data_Zwrotu == null);
 
             if (wypozyczenie == null)
             {
-                TempData["Error"] = "Nie znaleziono wypożyczenia.";
-                return RedirectToAction("Index");
+                return NotFound("Nie znaleziono wypożyczenia lub książka została już zwrócona.");
             }
 
-            // Aktualizacja daty zwrotu
+            // Pobierz książkę z mapowania NowaKsiazka
+            var ksiazka = _context.NowaKsiazka
+                .FirstOrDefault(k => k.Id == wypozyczenie.Id_Ksiazka);
+
+            if (ksiazka == null)
+            {
+                return NotFound("Nie znaleziono książki w bazie danych.");
+            }
+
+            // Przekaż dane do widoku
+            ViewBag.Wypozyczenie = wypozyczenie;
+            ViewBag.Ksiazka = ksiazka;
+
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public IActionResult ZwrocPotwierdzenie(int id_wypozyczenia)
+        {
+            // Znajdź wypożyczenie na podstawie ID
+            var wypozyczenie = _context.Wypozyczenia
+                .FirstOrDefault(w => w.Id == id_wypozyczenia && w.Data_Zwrotu == null);
+
+            if (wypozyczenie == null)
+            {
+                return NotFound("Nie znaleziono wypożyczenia lub książka została już zwrócona.");
+            }
+
+            // Ustaw datę zwrotu
             wypozyczenie.Data_Zwrotu = DateTime.Now;
 
-            // Zmiana statusu książki na 'dostępna'
+            // Znajdź książkę z mapowania NowaKsiazka i ustaw jako dostępną
             var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == wypozyczenie.Id_Ksiazka);
             if (ksiazka != null)
             {
                 ksiazka.Dostepna = true;
             }
 
-            // Zapis zmian w bazie danych
+            // Zapisz zmiany
             _context.SaveChanges();
 
-            TempData["Success"] = "Książka została zwrócona.";
-            return RedirectToAction("Index");
+            TempData["Message"] = "Zwrot książki został pomyślnie zarejestrowany.";
+            return RedirectToAction("KsiazkiKlienta", "Klienci", new { id = wypozyczenie.Id_Klient });
         }
     }
 }
