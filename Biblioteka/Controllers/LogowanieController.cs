@@ -1,12 +1,14 @@
 ﻿using Biblioteka.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Biblioteka.Controllers
 {
+    [AllowAnonymous]
     public class LogowanieController : Controller
     {
         private readonly BibliotekaContext _context;
@@ -16,11 +18,13 @@ namespace Biblioteka.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public IActionResult Logowanie()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logowanie(LogowanieViewModel model)
@@ -42,7 +46,8 @@ namespace Biblioteka.Controllers
                         {
                             new Claim(ClaimTypes.Name, uzytkownik.Email),
                             new Claim("Imie", uzytkownik.Imie),
-                            new Claim("Nazwisko", uzytkownik.Nazwisko)
+                            new Claim("Nazwisko", uzytkownik.Nazwisko),
+                            new Claim("Uprawnienia", uzytkownik.Id_Uprawnienia.ToString() ?? "4")
                         };
 
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

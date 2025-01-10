@@ -1,10 +1,12 @@
 ﻿using Biblioteka.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Controllers
 {
+    [AllowAnonymous]
     public class RejestracjaController : Controller
     {
         private readonly BibliotekaContext _context;
@@ -13,11 +15,13 @@ namespace Biblioteka.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         public IActionResult Rejestracja()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Rejestracja(RegisterViewModel model)
@@ -34,12 +38,25 @@ namespace Biblioteka.Controllers
                     Id_Uprawnienia = 4 // Opcjonalnie można przypisać domyślny poziom uprawnień
                 };
 
-                // Dodanie użytkownika do bazy danych
-                _context.Uzytkownicy.Add(nowyUzytkownik);
-                _context.SaveChanges();
-
-                // Przekierowanie do strony logowania lub innej
-                return RedirectToAction("Logowanie", "Logowanie");
+                try
+                {
+                    // Dodanie użytkownika do bazy danych
+                    _context.Uzytkownicy.Add(nowyUzytkownik);
+                    _context.SaveChanges();
+                    TempData["Success"] = "Konto zostało utworzone pomyślnie. Możesz się teraz zalogować.";
+                    return RedirectToAction("Logowanie", "Logowanie");
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException != null && ex.InnerException.Message.Contains("UNIQUE KEY"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Użytkownik o podanym adresie e-mail już isnieje. Jeżeli nie pamiętasz hasła, skontaktuj się z administratorem.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Wystąpił błąd podczas zapisywania zmian w bazie danych.");
+                    }
+                }
             }
 
             return View(model); // Powrót do widoku z błędami walidacji
