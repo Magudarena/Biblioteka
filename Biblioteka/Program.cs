@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Dodaj konfiguracjê kontekstu bazy danych
 builder.Services.AddDbContext<BibliotekaContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("BibliotekaConnection"),
-        sqlOptions => sqlOptions.EnableRetryOnFailure()));
+        builder.Configuration.GetConnectionString("BibliotekaConnection")));
+
 
 
 builder.Services.AddControllersWithViews();

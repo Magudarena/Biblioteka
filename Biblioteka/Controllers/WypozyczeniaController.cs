@@ -25,90 +25,68 @@ namespace Biblioteka.Controllers
         [HttpPost]
         public IActionResult SzukajKsiazke(string nrBiblioteczny)
         {
-            // Wyszukiwanie książki na podstawie numeru bibliotecznego i dostępności
+            Console.WriteLine($"SzukajKsiazke: nrBiblioteczny = {nrBiblioteczny}");
+
             var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Nr_biblioteczny == nrBiblioteczny && k.Dostepna);
 
-            // Obsługa przypadku, gdy książka nie została znaleziona
             if (ksiazka == null)
             {
-                ViewBag.Message = "Książka niedostępna lub nie istnieje.";
+                Console.WriteLine("Nie znaleziono książki lub jest niedostępna.");
+                ViewBag.Message = "Nie znaleziono książki lub jest niedostępna.";
                 return View("Wypozyczenia");
             }
 
-            // Przekazanie znalezionej książki do widoku PodsumowanieKsiazki
+            Console.WriteLine($"Znaleziono książkę: Id = {ksiazka.Id}, Tytuł = {ksiazka.Tytul}");
             return View("PodsumowanieKsiazki", ksiazka);
         }
 
         [HttpPost]
         public IActionResult SzukajKlienta(string telefon, int ksiazkaId)
         {
-            if (string.IsNullOrWhiteSpace(telefon))
-            {
-                ViewBag.Message = "Podaj numer telefonu.";
+            Console.WriteLine($"SzukajKlienta: telefon = {telefon}, ksiazkaId = {ksiazkaId}");
 
-                // Pobieramy wcześniej wyszukaną książkę, aby ponownie ją przekazać do widoku
-                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == ksiazkaId);
-                return View("PodsumowanieKsiazki", ksiazka);
-            }
-
-            // Wyszukiwanie klienta w bazie danych
             var klient = _context.Klient.FirstOrDefault(k => k.Telefon == telefon);
 
             if (klient == null)
             {
-                // Obsługa przypadku, gdy klient nie został znaleziony
-                ViewBag.Message = "Nie znaleziono klienta o tym numerze telefonu.";
-
-                // Pobieramy wcześniej wyszukaną książkę, aby ponownie ją przekazać do widoku
+                Console.WriteLine("Nie znaleziono klienta.");
+                ViewBag.Message = "Nie znaleziono klienta o podanym numerze telefonu.";
                 var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == ksiazkaId);
                 return View("PodsumowanieKsiazki", ksiazka);
             }
 
-            // Przekazanie klienta do kolejnego widoku (jeśli znaleziony)
+            Console.WriteLine($"Znaleziono klienta: Id = {klient.Id}, Imię = {klient.Imie}, Nazwisko = {klient.Nazwisko}");
+            ViewBag.KsiazkaId = ksiazkaId;
             return View("WybierzKlienta", new List<Klient> { klient });
         }
 
-        // Wypożycza książkę dla klienta
         [HttpPost]
-        public IActionResult Wypozycz(string nrBiblioteczny, int klientId)
+        public IActionResult Wypozycz(int ksiazkaId, int klientId)
         {
-            using var transaction = _context.Database.BeginTransaction();
-            try
-            {
-                // Wyszukiwanie książki po numerze bibliotecznym
-                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Nr_biblioteczny == nrBiblioteczny && k.Dostepna);
+                // Znajdź książkę po ID w odpowiednim DbSet
+                var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == ksiazkaId);
 
-                if (ksiazka == null)
-                {
-                    ViewBag.Message = "Książka jest niedostępna.";
-                    return View("Wypozyczenia");
-                }
 
-                // Aktualizacja dostępności książki
+                // Aktualizacja statusu książki
                 ksiazka.Dostepna = false;
                 _context.NowaKsiazka.Update(ksiazka);
 
-                // Dodanie wpisu wypożyczenia do tabeli KsiazkaPerKlient
-                var wypozyczenie = new KsiazkaPerKlient
+                // Dodanie rekordu do tabeli wypożyczenia
+                var wypozyczenie = new Wypozyczenie
                 {
-                    Id_Ksiazka = ksiazka.Id, // Klucz główny to 'Id'
+                    Id_Ksiazka = ksiazkaId,
                     Id_Klient = klientId,
-                    Data_Wypozyczenia = DateTime.Now
+                    Data_Wypozyczenia = DateTime.Now,
+                    Data_Zwrotu = null
                 };
-                _context.KsiazkaPerKlient.Add(wypozyczenie);
+                _context.Wypozyczenia.Add(wypozyczenie);
 
-                // Zapisanie zmian i zatwierdzenie transakcji
+                // Zapisanie zmian w bazie
                 _context.SaveChanges();
-                transaction.Commit();
 
+                // Przekierowanie do widoku Listy książek Klienta
                 return RedirectToAction("KsiazkiKlienta", "Klienci", new { id = klientId });
-            }
-            catch
-            {
-                transaction.Rollback();
-                ViewBag.Message = "Wystąpił błąd podczas wypożyczania książki.";
-                return View("Wypozyczenia");
-            }
         }
+
     }
 }
