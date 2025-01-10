@@ -56,6 +56,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Zwracanie" asp-action="Zwracanie">Zwracanie</a>
                             </li>
+                            var uprawnienia = User.FindFirst("Uprawnienia")?.Value;
+
+                            if (uprawnienia == "1")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Uzytkownicy" asp-action="Uzytkownicy">Użytkownicy</a>
+                                </li>
+                            }
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Zasady prywatności</a>

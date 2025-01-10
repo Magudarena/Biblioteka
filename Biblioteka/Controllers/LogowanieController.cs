@@ -46,7 +46,8 @@ namespace Biblioteka.Controllers
                         {
                             new Claim(ClaimTypes.Name, uzytkownik.Email),
                             new Claim("Imie", uzytkownik.Imie),
-                            new Claim("Nazwisko", uzytkownik.Nazwisko)
+                            new Claim("Nazwisko", uzytkownik.Nazwisko),
+                            new Claim("Uprawnienia", uzytkownik.Id_Uprawnienia.ToString() ?? "4")
                         };
 
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

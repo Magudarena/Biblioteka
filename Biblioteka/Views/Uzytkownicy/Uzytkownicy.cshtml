@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Biblioteka.Models.Uzytkownik>
+
+@{
+    ViewData["Title"] = "Lista użytkowników";
+}
+
+<h1>Lista użytkowników</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Email</th>
+            <th>Uprawnienia</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var uzytkownik in Model)
+        {
+            <tr>
+                <td>@uzytkownik.Id</td>
+                <td>@uzytkownik.Imie</td>
+                <td>@uzytkownik.Nazwisko</td>
+                <td>@uzytkownik.Email</td>
+                <td>@uzytkownik.Uprawnienia?.Nazwa</td>
+            </tr>
+        }
+    </tbody>
+</table>
