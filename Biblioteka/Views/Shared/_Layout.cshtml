@@ -71,21 +71,28 @@
 
 
 
-                        <li class="nav-item" style="margin-left:auto; display: flex; justify-content: flex-end;">
+                        
                             @if (User.Identity.IsAuthenticated)
                             {
+                            <li class="nav-item" style="margin-left:auto; display: flex; justify-content: flex-end; padding: 0 5px;">
                                 <span class="nav-link text-dark" >
                                     Zalogowano jako @User.FindFirst("Imie")?.Value @User.FindFirst("Nazwisko")?.Value
                                 </span>
+                            </li>
+                            <li class="nav-item" style="display: flex; justify-content: flex-end; padding: 0 5px;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Logowanie" asp-action="Wyloguj">Wyloguj</a>
+                            </li>
                             }
                             else
                             {
+                            <li class="nav-item" style="margin-left:auto; display: flex; justify-content: flex-end; padding: 0 5px;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Logowanie" asp-action="Logowanie">Logowanie</a>
+                            </li>
+                            <li class="nav-item" style="display: flex; justify-content: flex-end; padding: 0 5px;">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Rejestracja" asp-action="Rejestracja">Rejestracja</a>
+                            </li>
                             }
-                        </li>
-
+                      
 
 
 
