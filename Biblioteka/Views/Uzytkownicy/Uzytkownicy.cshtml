@@ -30,7 +30,7 @@
             <th>Imię</th>
             <th>Nazwisko</th>
             <th>Email</th>
-            <th>Uprawnienia</th>
+            <th>Aktualne Uprawnienia</th>
             <th>Akcja</th>
         </tr>
     </thead>
@@ -42,17 +42,31 @@
                 <td>@uzytkownik.Imie</td>
                 <td>@uzytkownik.Nazwisko</td>
                 <td>@uzytkownik.Email</td>
+                <td>@uzytkownik.Uprawnienia?.Nazwa</td>
                 <td>
                     <form method="post" asp-action="ZmienUprawnienia" asp-controller="Uzytkownicy">
                         <input type="hidden" name="id" value="@uzytkownik.Id" />
                         <select name="noweUprawnienia" class="form-select" asp-items="ViewBag.Uprawnienia">
                             <option value="">Wybierz uprawnienie</option>
                         </select>
-                      
+                <td><button type="submit" class="btn btn-primary">Zatwierdź</button></td>
                     </form>
                 </td>
-                <td><button type="submit" class="btn btn-primary">Zatwierdź</button></td>
             </tr>
         }
     </tbody>
 </table>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}

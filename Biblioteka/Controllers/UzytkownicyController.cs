@@ -42,12 +42,16 @@ namespace Biblioteka.Controllers
         {
             var uzytkownik = _context.Uzytkownicy.Find(id);
 
-            if (uzytkownik != null)
+            if (uzytkownik == null)
             {
-                uzytkownik.Id_Uprawnienia = noweUprawnienia;
-                _context.SaveChanges();
+                return NotFound();
             }
 
+            uzytkownik.Id_Uprawnienia = noweUprawnienia;
+
+            _context.SaveChanges();
+
+            TempData["Success"] = "Poziom uprawnień został pomyślnie zmieniony.";
             return RedirectToAction("Uzytkownicy");
         }
     }
