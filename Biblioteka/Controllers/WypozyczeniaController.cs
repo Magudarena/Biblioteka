@@ -25,13 +25,11 @@ namespace Biblioteka.Controllers
         [HttpPost]
         public IActionResult SzukajKsiazke(string nrBiblioteczny)
         {
-            Console.WriteLine($"SzukajKsiazke: nrBiblioteczny = {nrBiblioteczny}");
 
             var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Nr_biblioteczny == nrBiblioteczny && k.Dostepna);
 
             if (ksiazka == null)
             {
-                Console.WriteLine("Nie znaleziono książki lub jest niedostępna.");
                 ViewBag.Message = "Nie znaleziono książki lub jest niedostępna.";
                 return View("Wypozyczenia");
             }
@@ -43,19 +41,16 @@ namespace Biblioteka.Controllers
         [HttpPost]
         public IActionResult SzukajKlienta(string telefon, int ksiazkaId)
         {
-            Console.WriteLine($"SzukajKlienta: telefon = {telefon}, ksiazkaId = {ksiazkaId}");
 
             var klient = _context.Klient.FirstOrDefault(k => k.Telefon == telefon);
 
             if (klient == null)
             {
-                Console.WriteLine("Nie znaleziono klienta.");
                 ViewBag.Message = "Nie znaleziono klienta o podanym numerze telefonu.";
                 var ksiazka = _context.NowaKsiazka.FirstOrDefault(k => k.Id == ksiazkaId);
                 return View("PodsumowanieKsiazki", ksiazka);
             }
 
-            Console.WriteLine($"Znaleziono klienta: Id = {klient.Id}, Imię = {klient.Imie}, Nazwisko = {klient.Nazwisko}");
             ViewBag.KsiazkaId = ksiazkaId;
             return View("WybierzKlienta", new List<Klient> { klient });
         }

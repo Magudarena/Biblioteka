@@ -22,9 +22,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id wypożyczenia</th>
-            <th>Id klienta</th>
-            <th>Id książki</th>
             <th>Nr Biblioteczny</th>
             <th>Tytuł</th>
             <th>Autor</th>
@@ -46,9 +43,6 @@
             @foreach (var ksiazka in Model)
             {
                 <tr>
-                    <td>@ksiazka.Id_Wypozyczenia</td>
-                    <td>@ksiazka.Id_Klient</td>
-                    <td>@ksiazka.Id_Ksiazka</td>
                     <td>@ksiazka.Nr_Biblioteczny</td>
                     <td>@ksiazka.Tytul</td>
                     <td>@ksiazka.Autor</td>
