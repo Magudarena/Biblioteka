@@ -2,6 +2,7 @@
 use master;
 create database Biblioteka;
 use Biblioteka;
+
 --Utworzenie tabel w bazie
 CREATE TABLE kategoria (
 id int IDENTITY(1,1) PRIMARY KEY,
@@ -42,6 +43,7 @@ id_klient int FOREIGN KEY REFERENCES klient(id) ON DELETE CASCADE,
 data_wypozyczenia datetime,
 data_zwrotu datetime
 );
+
 --Po utworzeniu bazy należy utworzyć widoki
 create view KsiazkaPerKlient as
 select w.id as "id_wypozyczenia", kl.id as "id_klient", ks.id as "id_ksiazka", ks.nr_biblioteczny, ks.tytul, ks.autor, ks.ISBN, w.data_wypozyczenia, w.data_zwrotu from wypozyczenia w
@@ -54,6 +56,7 @@ group by k.id, k.imie, k.nazwisko, k.telefon, k.email;
 create view ListaKsiazek as
 select ks.id, ks.nr_biblioteczny, ks.tytul, ks.autor, ks.ISBN, kt.nazwa as "kategoria", ks.dostepna from ksiazka ks
 join kategoria kt on ks.kategoria = kt.id;
+
 --Należy dodać poziomy uprawnień użytkowników
 INSERT INTO uprawnienia (nazwa) VALUES ('Administrator');
 INSERT INTO uprawnienia (nazwa) VALUES ('Lepsze');
