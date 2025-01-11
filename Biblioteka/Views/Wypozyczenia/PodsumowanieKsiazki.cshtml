@@ -27,10 +27,8 @@
 <p><strong>ISBN:</strong> @Model.ISBN</p>
 <p><strong>Dostępność:</strong> @(Model.Dostepna ? "Dostępna" : "Niedostępna")</p>
 
-<!-- Formularz wyszukiwania klienta -->
 <h3>Wyszukaj klienta</h3>
 <form asp-action="SzukajKlienta" method="post">
-    <!-- Przechowywanie identyfikatora książki -->
     <input type="hidden" name="KsiazkaId" value="@Model.Id" />
 
     <div class="form-group">

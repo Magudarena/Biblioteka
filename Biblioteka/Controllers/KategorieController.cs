@@ -75,9 +75,27 @@ namespace Biblioteka.Controllers
                 return NotFound(); // Jeśli kategoria nie istnieje
             }
 
-            _context.Kategoria.Remove(kategoria); // Usuń kategorię z bazy danych
-            _context.SaveChanges(); // Zapisz zmiany
-            return RedirectToAction("Index"); // Powrót na listę kategorii
+            try
+            {
+                _context.Kategoria.Remove(kategoria); // Usuń kategorię z bazy danych
+                _context.SaveChanges(); // Zapisz zmiany
+                TempData["Success"] = "Kategoria została pomyślnie usunięta.";
+                return RedirectToAction("Index"); // Powrót na listę kategorii
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("REFERENCE constraint"))
+                {
+                    ModelState.AddModelError(string.Empty, "Do kategorii jest przypisana co najmniej jedna książka. Brak możliwości usunięcia");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Wystąpił błąd podczas zapisywania zmian w bazie danych.");
+                }
+            }
+
+            var kategorie = _context.Kategoria.ToList();
+            return View("Kategorie", kategorie);
         }
     }
 }

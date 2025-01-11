@@ -84,6 +84,7 @@ namespace Biblioteka.Controllers
                 return NotFound();
             }
 
+
             _context.NowaKsiazka.Remove(ksiazka); // Usuń książkę z tabeli
             _context.SaveChanges(); // Zapisz zmiany w bazie danych
 
