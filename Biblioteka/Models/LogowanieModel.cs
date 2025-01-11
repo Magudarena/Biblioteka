@@ -9,7 +9,7 @@ namespace Biblioteka.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Proszę podaj hasło")]
-        [MinLength(6, ErrorMessage = "Hasło musi mieć co najmniej 6 znaków")]
+        [MinLength(6, ErrorMessage = "Hasło musi mieć co najmniej 8 znaków")]
         public string Haslo { get; set; }
     }
 }

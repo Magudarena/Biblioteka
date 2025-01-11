@@ -15,7 +15,9 @@ namespace Biblioteka.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Proszę podaj hasło")]
-        [MinLength(6, ErrorMessage = "Hasło musi mieć co najmniej 6 znaków")]
+        [MinLength(8, ErrorMessage = "Hasło musi mieć co najmniej 8 znaków")]
+        [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", ErrorMessage = "Hasło musi zawierać co najmniej jedną dużą literę, jedną małą literę i jedną cyfrę")]
+
         public string Haslo { get; set; }
 
         [Required(ErrorMessage = "Proszę potwierdź hasło")]
