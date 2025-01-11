@@ -4,7 +4,24 @@
     var uprawnieniaSelectList = new SelectList(ViewBag.Uprawnienia, "Id", "Nazwa");
 }
 
-<h1>Lista użytkowników</h1>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
+
+    .my-div {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+<h3>Lista użytkowników</h3>
+
 
 <table class="table table-bordered">
     <thead>
@@ -31,9 +48,10 @@
                         <select name="noweUprawnienia" class="form-select" asp-items="ViewBag.Uprawnienia">
                             <option value="">Wybierz uprawnienie</option>
                         </select>
-                        <button type="submit" class="btn btn-primary btn-sm mt-1">Zatwierdź</button>
+                      
                     </form>
                 </td>
+                <td><button type="submit" class="btn btn-primary">Zatwierdź</button></td>
             </tr>
         }
     </tbody>
